@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import Colors from '../../theme/Colors';
 
 export const HomeStyles = StyleSheet.create({
@@ -16,4 +16,92 @@ export const HomeStyles = StyleSheet.create({
     fontSize: 14,
     marginStart: 7,
   },
+  containerButtonAddMyList: {
+    borderRadius: 25,
+    flexDirection: 'row',
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderColor: 'white',
+    borderWidth: 2,
+    marginStart: 10,
+  },
+  iconButtonAddMyListStyles: {width: 10, height: 10, alignSelf: 'center'},
+  textButtonAddMyListStyles: {
+    color: 'white',
+    alignSelf: 'center',
+    fontSize: 14,
+    marginStart: 7,
+  },
+  containerImagePostCardItem: {
+    marginEnd: 10,
+    height: Dimensions.get('screen').height / 4,
+    width: Dimensions.get('screen').width / 2.7,
+  },
+  imageStyleImagePostCardItem: {borderRadius: 15},
+  shadowImagePostCardItem: {
+    borderRadius: 15,
+    height: Dimensions.get('screen').height / 4,
+    width: Dimensions.get('screen').width / 2.7,
+    position: 'absolute',
+  },
+  textTopAnimeImagePostCardItem: {
+    fontSize: 36,
+    fontWeight: '500',
+    color: 'white',
+    position: 'absolute',
+    bottom: '2%',
+    start: '5%',
+  },
+  textNewEspisodeImagePostCardItem: {
+    fontSize: 36,
+    fontWeight: '500',
+    color: 'white',
+    position: 'absolute',
+    bottom: '2%',
+    start: '5%',
+  },
+  containerCover: {
+    width: '100%',
+    aspectRatio: 1.2,
+  },
+  shadowCover: {width: '100%', aspectRatio: 1.2, position: 'absolute'},
+  containerHeaderCover: {flexDirection: 'row-reverse'},
+  iconNotification: {
+    width: 20,
+    height: 20,
+    tintColor: 'white',
+    marginEnd: 20,
+    padding: 5,
+  },
+  iconSearch: {
+    width: 20,
+    height: 20,
+    tintColor: 'white',
+    marginEnd: 30,
+    padding: 5,
+  },
+  containerBottomCover: {
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: '3%',
+    marginStart: 20,
+  },
+  nameCover: {color: 'white', fontSize: 24, fontWeight: '500'},
+  typeCover: {color: 'white', fontSize: 12, fontWeight: '400'},
+  containerButtonsBottomCover: {flexDirection: 'row', marginTop: 10},
+  containerContent: {flexDirection: 'row', marginHorizontal: 10},
+  textTopAnime: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginVertical: 15,
+  },
+  textSeeAll: {
+    position: 'absolute',
+    end: 0,
+    color: Colors.colorPrimary,
+    alignSelf: 'center',
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  contentContainerListPostCard: {marginHorizontal: 10},
 });

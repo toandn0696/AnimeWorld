@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Dimensions,
   FlatList,
@@ -14,23 +15,27 @@ import BaseScreen from '../../components/BaseScreen';
 import React, {ReactElement, useEffect} from 'react';
 import {Drawables} from '../../asset/images';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Colors from '../../theme/Colors';
 import LinearGradient from 'react-native-linear-gradient';
 import {useHome} from './useHome';
 import {HomeStyles} from './Home.Styles';
+import {useTheme} from '@react-navigation/native';
 // import {storage} from '../../lib/mmkv/mmkv';
 
 const URL_IMAGE_COVER =
   'https://beebom.com/wp-content/uploads/2022/12/Demon-Slayer-Season-3-Release-Date-Trailer-Plot-Cast-and-More.jpg';
 
+type itemList = {item: any; index: number};
+
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
-  const {isLoading, getTopAnime, data} = useHome();
+  const {isLoading, getTopAnime, getEspisode, data, dataEspisode} = useHome();
+  const {colors} = useTheme();
 
   useEffect(() => {
     // storage.set('user.name', 'xxxx');
     // console.log(`${storage.getString('user.name')}`);
     getTopAnime();
+    getEspisode();
   }, []);
 
   function buttonPlay() {
@@ -47,57 +52,39 @@ const HomeScreen = () => {
 
   function buttonAddMyList() {
     return (
-      <TouchableOpacity
-        style={{
-          borderRadius: 25,
-          flexDirection: 'row',
-          paddingHorizontal: 15,
-          paddingVertical: 5,
-          borderColor: 'white',
-          borderWidth: 2,
-          marginStart: 10,
-        }}>
+      <TouchableOpacity style={HomeStyles.containerButtonAddMyList}>
         <Image
-          style={{width: 10, height: 10, alignSelf: 'center'}}
+          style={HomeStyles.iconButtonAddMyListStyles}
           source={Drawables.ic_plus}
         />
-        <Text
-          style={{
-            color: 'white',
-            alignSelf: 'center',
-            fontSize: 14,
-            marginStart: 7,
-          }}>
-          My List
-        </Text>
+        <Text style={HomeStyles.textButtonAddMyListStyles}>My List</Text>
       </TouchableOpacity>
     );
   }
 
   function renderPostCardItem(
-    isRank: boolean | true,
-    {item}: any,
+    {item, index}: itemList,
+    isTopAnime?: boolean,
   ): ReactElement<any, any> {
-    console.log(item);
+    console.log(`item: ${item.episodeNumber}`);
     return (
       <ImageBackground
-        style={{
-          marginEnd: 10,
-          height: Dimensions.get('screen').height / 4,
-          width: Dimensions.get('screen').width / 2.7,
-        }}
-        imageStyle={{borderRadius: 15}}
+        style={HomeStyles.containerImagePostCardItem}
+        imageStyle={HomeStyles.imageStyleImagePostCardItem}
         source={{uri: item.image}}>
         <LinearGradient
           colors={['#00000000', '#00000090']}
-          style={{
-            borderRadius: 15,
-            height: Dimensions.get('screen').height / 4,
-            width: Dimensions.get('screen').width / 2.7,
-            position: 'absolute',
-          }}
+          style={HomeStyles.shadowImagePostCardItem}
         />
-        {/* {isRank ? <Text>{item.id}</Text> : <Text>{item.episodeNumber}</Text>} */}
+        {isTopAnime ? (
+          <Text style={HomeStyles.textTopAnimeImagePostCardItem}>
+            {index + 1}
+          </Text>
+        ) : (
+          <Text style={HomeStyles.textNewEspisodeImagePostCardItem}>
+            {item.episodeNumber}
+          </Text>
+        )}
       </ImageBackground>
     );
   }
@@ -110,15 +97,12 @@ const HomeScreen = () => {
         translucent
       />
       <ImageBackground
-        style={{
-          width: '100%',
-          aspectRatio: 1.2,
-        }}
+        style={HomeStyles.containerCover}
         resizeMode="cover"
         source={{uri: URL_IMAGE_COVER}}>
         <LinearGradient
           colors={['#00000080', '#00000000', '#000000']}
-          style={{width: '100%', aspectRatio: 1.2, position: 'absolute'}}
+          style={HomeStyles.shadowCover}
         />
         <View
           style={{
@@ -127,74 +111,56 @@ const HomeScreen = () => {
                 ? insets.top * 1.2
                 : Dimensions.get('screen').height * 0.05,
           }}>
-          <View style={{flexDirection: 'row-reverse'}}>
+          <View style={HomeStyles.containerHeaderCover}>
             <Pressable>
               <Image
                 source={Drawables.ic_notification}
-                style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: 'white',
-                  marginEnd: 20,
-                  padding: 5,
-                }}
+                style={HomeStyles.iconNotification}
               />
             </Pressable>
 
             <Pressable>
               <Image
                 source={Drawables.ic_search}
-                style={{
-                  width: 20,
-                  height: 20,
-                  tintColor: 'white',
-                  marginEnd: 30,
-                  padding: 5,
-                }}
+                style={HomeStyles.iconSearch}
               />
             </Pressable>
           </View>
         </View>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            marginBottom: '3%',
-            marginStart: 20,
-          }}>
-          <Text style={{color: 'white'}}>Name</Text>
-          <Text style={{color: 'white'}}>Type</Text>
-          <View style={{flexDirection: 'row', marginTop: 10}}>
+        <View style={HomeStyles.containerBottomCover}>
+          <Text style={HomeStyles.nameCover} numberOfLines={1}>
+            Name
+          </Text>
+          <Text style={HomeStyles.typeCover}>Type</Text>
+          <View style={HomeStyles.containerButtonsBottomCover}>
             {buttonPlay()}
             {buttonAddMyList()}
           </View>
         </View>
       </ImageBackground>
-      <View style={{flexDirection: 'row', marginHorizontal: 20}}>
-        <Text>Top Hits Anime</Text>
-        <Text
-          style={{position: 'absolute', end: 0, color: Colors.colorPrimary}}>
-          See all
+      <View style={HomeStyles.containerContent}>
+        <Text style={[HomeStyles.textTopAnime, {color: colors.text}]}>
+          Top Hits Anime
         </Text>
+        <Text style={HomeStyles.textSeeAll}>See all</Text>
       </View>
       <FlatList
-        contentContainerStyle={{marginHorizontal: 10}}
+        contentContainerStyle={HomeStyles.contentContainerListPostCard}
         data={data?.results}
-        renderItem={item => renderPostCardItem(true, item)}
+        renderItem={item => renderPostCardItem(item, true)}
         horizontal={true}
         keyExtractor={item => item.id.toString()}
       />
-      <View style={{flexDirection: 'row', marginHorizontal: 20}}>
-        <Text>New Espisode Releases</Text>
-        <Text
-          style={{position: 'absolute', end: 0, color: Colors.colorPrimary}}>
-          See all
+      <View style={HomeStyles.containerContent}>
+        <Text style={[HomeStyles.textTopAnime, {color: colors.text}]}>
+          New Espisode Releases
         </Text>
+        <Text style={HomeStyles.textSeeAll}>See all</Text>
       </View>
       <FlatList
         contentContainerStyle={{marginHorizontal: 10}}
-        data={data?.results}
-        renderItem={item => renderPostCardItem(true, item)}
+        data={dataEspisode?.results}
+        renderItem={item => renderPostCardItem(item, false)}
         horizontal={true}
         keyExtractor={item => item.id.toString()}
       />
