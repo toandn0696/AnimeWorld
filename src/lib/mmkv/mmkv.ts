@@ -1,5 +1,6 @@
-// import {MMKV} from 'react-native-mmkv';
+import {MMKV} from 'react-native-mmkv';
 
 export const storage = new MMKV({
-  id: 'user-1',
+  id: 'user12',
+  path: './customPath',
 });

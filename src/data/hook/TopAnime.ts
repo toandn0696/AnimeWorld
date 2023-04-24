@@ -6,3 +6,9 @@ export const useTopAnime = () => {
     return APIService.getTopAnime();
   });
 };
+
+export const useEspisodeAnime = () => {
+  return useMutation(() => {
+    return APIService.getNewRelease();
+  });
+};
