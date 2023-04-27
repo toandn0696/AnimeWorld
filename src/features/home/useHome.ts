@@ -1,8 +1,8 @@
-import {useEspisodeAnime, useTopAnime} from '../../data/hook/TopAnime';
+import {useEspisodeAnimeAPI, useTopAnimeAPI} from '../../data/hook/TopAnime';
 
 export const useHome = () => {
-  const topAnime = useTopAnime();
-  const espisodeAnime = useEspisodeAnime();
+  const topAnime = useTopAnimeAPI();
+  const espisodeAnime = useEspisodeAnimeAPI();
   const getTopAnime = () => {
     topAnime.mutate();
   };
