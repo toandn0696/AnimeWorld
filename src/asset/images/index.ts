@@ -23,4 +23,5 @@ export const Drawables = {
   ic_notification: require('./ic_notification.png'),
   ic_play_button: require('./ic_play_button.png'),
   ic_plus: require('./ic_plus.png'),
+  ic_tick: require('./ic_tick.png'),
 };

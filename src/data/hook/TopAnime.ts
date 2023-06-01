@@ -1,13 +1,13 @@
 import {useMutation} from 'react-query';
 import {APIService} from '../network/APIService';
 
-export const useTopAnime = () => {
-  return useMutation(() => {
-    return APIService.getTopAnime();
+export const useTopAnimeAPI = () => {
+  return useMutation((page?: number) => {
+    return APIService.getTopAnime(page);
   });
 };
 
-export const useEspisodeAnime = () => {
+export const useEspisodeAnimeAPI = () => {
   return useMutation(() => {
     return APIService.getNewRelease();
   });
