@@ -61,9 +61,9 @@ const WatchingScreen = () => {
             }}>
             <Image source={Drawables.ic_back} style={WatchingStyles.icBack} />
           </Pressable>
-          <Pressable>
+          {/* <Pressable>
             <Image source={isPause ? Drawables.ic_pause : Drawables.ic_play} />
-          </Pressable>
+          </Pressable> */}
         </Pressable>
       )}
     </View>
