@@ -3,12 +3,14 @@ import React, {useEffect, useState} from 'react';
 import CommonTextField from '../../components/CommonTextField';
 import {Drawables} from '../../asset/images';
 import {SignInStyles} from './SignIn.Style';
-import {Image, Platform, Pressable, Text, View} from 'react-native';
+import {Dimensions, Image, Platform, Pressable, Text, View} from 'react-native';
 import PrimaryButtonApp from '../../components/PrimaryButton';
-import {useTheme} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
 // import {RootStackProp} from '../../navigation/TypeNavigtion';
 import {useTranslation} from 'react-i18next';
 import ButtonLogo from '../../components/ButtonLogo';
+import {RootStackProp} from '../../navigation/TypeNavigtion';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // import useSignIn from './useSignIn';
 
 const SignInScreen = () => {
@@ -19,6 +21,8 @@ const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const {colors} = useTheme();
+  const navigation = useNavigation<RootStackProp>();
+  const insets = useSafeAreaInsets();
 
   // const navigation = useNavigation<RootStackProp>();
   const {t} = useTranslation();
@@ -32,7 +36,14 @@ const SignInScreen = () => {
   }, [email, pass]);
 
   return (
-    <BaseScreen style={SignInStyles.container}>
+    <BaseScreen
+      style={{
+        marginTop:
+          Platform.OS === 'ios'
+            ? insets.top * 1.2
+            : Dimensions.get('screen').height * 0.05,
+        ...SignInStyles.container,
+      }}>
       <Text style={SignInStyles.titleTextStyles}>
         {t('create_your_account')}
       </Text>
@@ -81,6 +92,9 @@ const SignInScreen = () => {
         containerStyles={SignInStyles.buttonSignInStyles}
         isDisable={isDisable}
         onPress={() => {
+          if (email !== '' && pass !== '') {
+            navigation.navigate('Main');
+          }
           // loginWithIDPW(email, pass);
         }}
       />
