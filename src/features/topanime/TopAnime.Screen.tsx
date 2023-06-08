@@ -7,6 +7,7 @@ import {useTopAnime} from './useTopAnime';
 import {TopAnimeStyles} from './TopAnime.Styles';
 import {useTheme} from '@react-navigation/native';
 
+
 type itemList = {item: any; index: number};
 
 const TopAnimeScreen = () => {

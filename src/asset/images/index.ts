@@ -24,4 +24,10 @@ export const Drawables = {
   ic_play_button: require('./ic_play_button.png'),
   ic_plus: require('./ic_plus.png'),
   ic_tick: require('./ic_tick.png'),
+  ic_share: require('./ic_share.png'),
+  ic_rating: require('./ic_rating.png'),
+  ic_arrow_right: require('./ic_arrow_right.png'),
+  ic_download_video: require('./ic_download_video.png'),
+  ic_play: require('./ic_play.png'),
+  ic_pause: require('./ic_pause.png'),
 };
