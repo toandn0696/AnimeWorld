@@ -73,6 +73,7 @@ export const SignInStyles = StyleSheet.create({
     fontWeight: '400',
     color: Colors.colorTextPrimary,
     alignSelf: 'center',
+    marginTop: 20,
   },
   textSignUpStyles: {
     fontSize: 16,

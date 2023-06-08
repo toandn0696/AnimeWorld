@@ -11,7 +11,7 @@ const BottomTab = createBottomTabNavigator();
 export function AppNavigation() {
   return (
     <AppStack.Navigator
-      initialRouteName="Main"
+      initialRouteName="Splash"
       screenOptions={() => ({
         headerShown: false,
       })}>
