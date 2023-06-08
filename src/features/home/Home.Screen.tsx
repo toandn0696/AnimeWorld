@@ -18,7 +18,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
 import {useHome} from './useHome';
 import {HomeStyles} from './Home.Styles';
-import {useTheme} from '@react-navigation/native';
+import {useNavigation, useTheme} from '@react-navigation/native';
+import {RootStackProp} from '../../navigation/TypeNavigtion';
 // import {storage} from '../../lib/mmkv/mmkv';
 
 const URL_IMAGE_COVER =
@@ -30,6 +31,7 @@ const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const {isLoading, getTopAnime, getEspisode, data, dataEspisode} = useHome();
   const {colors} = useTheme();
+  const navigation = useNavigation<RootStackProp>();
 
   useEffect(() => {
     // storage.set('user.name', 'xxxx');
@@ -66,26 +68,30 @@ const HomeScreen = () => {
     {item, index}: itemList,
     isTopAnime?: boolean,
   ): ReactElement<any, any> {
-    console.log(`item: ${item.episodeNumber}`);
     return (
-      <ImageBackground
-        style={HomeStyles.containerImagePostCardItem}
-        imageStyle={HomeStyles.imageStyleImagePostCardItem}
-        source={{uri: item.image}}>
-        <LinearGradient
-          colors={['#00000000', '#00000090']}
-          style={HomeStyles.shadowImagePostCardItem}
-        />
-        {isTopAnime ? (
-          <Text style={HomeStyles.textTopAnimeImagePostCardItem}>
-            {index + 1}
-          </Text>
-        ) : (
-          <Text style={HomeStyles.textNewEspisodeImagePostCardItem}>
-            {item.episodeNumber}
-          </Text>
-        )}
-      </ImageBackground>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('DetailAnime', {id: item.id});
+        }}>
+        <ImageBackground
+          style={HomeStyles.containerImagePostCardItem}
+          imageStyle={HomeStyles.imageStyleImagePostCardItem}
+          source={{uri: item.image}}>
+          <LinearGradient
+            colors={['#00000000', '#00000090']}
+            style={HomeStyles.shadowImagePostCardItem}
+          />
+          {isTopAnime ? (
+            <Text style={HomeStyles.textTopAnimeImagePostCardItem}>
+              {index + 1}
+            </Text>
+          ) : (
+            <Text style={HomeStyles.textNewEspisodeImagePostCardItem}>
+              {item.episodeNumber}
+            </Text>
+          )}
+        </ImageBackground>
+      </Pressable>
     );
   }
 
