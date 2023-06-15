@@ -23,11 +23,12 @@ export const WatchingStyles = StyleSheet.create({
     bottom: 0,
     right: 0,
     backgroundColor: '#00000080',
+    justifyContent: 'space-between',
   },
   icBack: {
     height: 20,
     width: 30,
-    marginStart: '10%',
+    marginStart: '5%',
     marginTop: '5%',
     tintColor: 'white',
   },

@@ -1,18 +1,19 @@
 import Video from 'react-native-video';
 import React, {useEffect, useRef, useState} from 'react';
-import {Image, Pressable, TouchableHighlight, View} from 'react-native';
+import {Image, Pressable, Text, TouchableHighlight, View} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import {Drawables} from '../../asset/images';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackProp} from '../../navigation/TypeNavigtion';
 import {WatchingStyles} from './Watching.Styles';
+import Slider from '@react-native-community/slider';
+import Colors from '../../theme/Colors';
 
 const source =
-  'https://tc-033.asuncdn.com/1ab5d45273a9183bebb58eb74d5722d8ea6384f350caf008f08cf018f1f0566d0cb82a2a799830d1af97cd3f4b6a9a81ef3aed2fb783292b1abcf1b8560a1d1aa308008b88420298522a9f761e5aa1024fbe74e5aa853cfc933cd1219327d1232e91847a185021b184c027f97ae732b3708ee6beb80ba5db6628ced43f1196fe/001a653d1086d112c96747afc1774d03/ep.1.1680370490.720.m3u8';
+  'https://www002.vipanicdn.net/streamhls/0789fd4f049c3ca2a49b860ea5d1f456/ep.1.1677591537.720.m3u8';
 
 const WatchingScreen = () => {
-  //   const [url, setUrl] = useState();
-  const videoRef = useRef(null);
+  const videoRef = useRef<Video>(null);
   const [isPause, setIsPause] = useState(false);
   const [isShowOption, setIsShowOption] = useState(false);
   const [totalTime, setTotalTime] = useState(0);
@@ -23,18 +24,28 @@ const WatchingScreen = () => {
     Orientation.lockToLandscape();
   }, []);
 
+
+  function getTotalTime(): string {
+    let totalTimeShow = totalTime - progress;
+    let minutes = Math.floor(totalTimeShow / 60);
+    let extraSeconds = Math.round(totalTimeShow % 60);
+    return `${minutes < 10 ? `0${minutes}` : minutes}:${
+      extraSeconds < 10 ? `0${extraSeconds}` : extraSeconds
+    }`;
+  }
+
   return (
     <View>
       <TouchableHighlight
         style={WatchingStyles.container}
         onPress={() => {
-          console.log('tap');
-          setIsPause(!isPause);
           setIsShowOption(!isShowOption);
         }}>
         <Video
           paused={isPause}
-          source={{uri: source}}
+          source={{
+            uri: source,
+          }}
           ref={videoRef}
           resizeMode="contain"
           fullscreen={true}
@@ -51,7 +62,6 @@ const WatchingScreen = () => {
         <Pressable
           style={WatchingStyles.bgOptionVideo}
           onPress={() => {
-            setIsPause(!isPause);
             setIsShowOption(!isShowOption);
           }}>
           <Pressable
@@ -61,9 +71,43 @@ const WatchingScreen = () => {
             }}>
             <Image source={Drawables.ic_back} style={WatchingStyles.icBack} />
           </Pressable>
-          {/* <Pressable>
-            <Image source={isPause ? Drawables.ic_pause : Drawables.ic_play} />
-          </Pressable> */}
+          <Pressable
+            onPress={() => {
+              setIsPause(!isPause);
+              setIsShowOption(!isShowOption);
+            }}>
+            <Image
+              style={{
+                width: 30,
+                height: 30,
+                alignSelf: 'center',
+              }}
+              source={isPause ? Drawables.ic_play : Drawables.ic_pause}
+            />
+          </Pressable>
+          <View
+            style={{
+              width: '100%',
+              flexDirection: 'row',
+              marginBottom: '2%',
+              marginHorizontal: 10,
+            }}>
+            <Slider
+              style={{flex: 2, marginEnd: '1%'}}
+              value={progress}
+              maximumValue={totalTime}
+              onValueChange={value => {
+                setProgress(value);
+                videoRef.current?.seek(value);
+              }}
+              thumbTintColor={'white'}
+              minimumTrackTintColor={Colors.colorPrimary}
+            />
+            <Text
+              style={{color: 'white', alignSelf: 'center', marginEnd: '5%'}}>
+              {getTotalTime()}
+            </Text>
+          </View>
         </Pressable>
       )}
     </View>
