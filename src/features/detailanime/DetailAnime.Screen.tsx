@@ -114,7 +114,7 @@ const DetailAnimeScreen = ({route}: any) => {
     <BaseScreen isLoading={isLoading}>
       <ImageBackground
         style={DetailAnimeStyles.containerCover}
-        resizeMode=""
+        resizeMode="stretch"
         source={{uri: data?.image}}>
         <LinearGradient
           colors={['#00000090', '#00000000', '#00000000']}
@@ -125,7 +125,7 @@ const DetailAnimeScreen = ({route}: any) => {
             marginTop:
               Platform.OS === 'ios'
                 ? insets.top * 1.2
-                : Dimensions.get('window').height * 0.12,
+                : Dimensions.get('window').height * 0.08,
             ...DetailAnimeStyles.containerIconBack,
           }}
           onPress={() => {

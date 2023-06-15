@@ -30,4 +30,6 @@ export const Drawables = {
   ic_download_video: require('./ic_download_video.png'),
   ic_play: require('./ic_play.png'),
   ic_pause: require('./ic_pause.png'),
+  ic_next_10_seconds: require('./ic_next_10_seconds.png'),
+  ic_back_10_seconds: require('./ic_back_10_seconds.png'),
 };
