@@ -11,6 +11,8 @@ import CreatePinScreen from '../../features/createpin/CreatePin.Screen';
 import {AppBottomTabNavigation} from '../AppNavigation';
 import WatchingScreen from '../../features/watching/Watching.Screen';
 import DetailAnimeScreen from '../../features/detailanime/DetailAnime.Screen';
+import TopAnimeScreen from '../../features/topanime/TopAnime.Screen';
+import TestUI from '../../features/TestUI';
 
 // type of the single route in app stack
 type AppStackRoutesType = StackRoutesType<RootStackParamList>;
@@ -59,5 +61,13 @@ export const appStackRoutes: AppStackRoutesType = [
   {
     name: 'DetailAnime',
     component: DetailAnimeScreen,
+  },
+  {
+    name: 'AllTopAnime',
+    component: TopAnimeScreen,
+  },
+  {
+    name: 'TestUI',
+    component: TestUI,
   },
 ];

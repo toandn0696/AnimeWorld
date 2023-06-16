@@ -1,4 +1,5 @@
 import {useTopAnimeAPI} from '../../data/hook/TopAnime';
+import {TopAnime} from '../../data/model/TopAnime';
 
 export const useTopAnime = () => {
   const topAnime = useTopAnimeAPI();
@@ -8,6 +9,6 @@ export const useTopAnime = () => {
   return {
     isLoading: topAnime.isLoading,
     getTopAnime,
-    data: topAnime.data,
+    data: topAnime.data as unknown as TopAnime,
   };
 };

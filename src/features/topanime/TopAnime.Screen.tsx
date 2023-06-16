@@ -1,12 +1,13 @@
-import {FlatList, Image, ImageBackground, Text, View} from 'react-native/types';
-import BaseScreen from '../../components/BaseScreen';
-import React, {ReactElement, useEffect} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import {FlatList, Image, ImageBackground, Text, View} from 'react-native';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {Drawables} from '../../asset/images';
 import LinearGradient from 'react-native-linear-gradient';
 import {useTopAnime} from './useTopAnime';
 import {TopAnimeStyles} from './TopAnime.Styles';
 import {useTheme} from '@react-navigation/native';
-
+import BaseScreenNoScroll from '../../components/BaseScreenNoScroll';
+import {ResponseTopAnime} from '../../data/model/TopAnime';
 
 type itemList = {item: any; index: number};
 
@@ -14,9 +15,21 @@ const TopAnimeScreen = () => {
   const {isLoading, getTopAnime, data} = useTopAnime();
   const {colors} = useTheme();
 
+  const [listData, setListData] = useState<ResponseTopAnime[]>([]);
+  const [page, setPage] = useState(1);
+  const [needLoadMore, setLoadMore] = useState(false);
+
   useEffect(() => {
-    getTopAnime();
-  }, []);
+    getTopAnime(page);
+  }, [page]);
+
+  useEffect(() => {
+    if (data?.results !== undefined) {
+      console.log(data?.hasNextPage);
+      setListData([...listData, ...data.results]);
+      setLoadMore(data?.hasNextPage);
+    }
+  }, [data?.currentPage]);
 
   function renderItemTopAnime({item, index}: itemList): ReactElement<any, any> {
     return (
@@ -32,14 +45,17 @@ const TopAnimeScreen = () => {
           <Text style={TopAnimeStyles.textTopAnime}>{index + 1}</Text>
         </ImageBackground>
         <View style={TopAnimeStyles.containerInfoImage}>
-          <Text style={[TopAnimeStyles.textNameAnime, {color: colors.text}]}>
+          <Text
+            style={[TopAnimeStyles.textNameAnime, {color: colors.text}]}
+            numberOfLines={2}>
             {item.title}
           </Text>
-          <Text style={[TopAnimeStyles.textTypeAnime, {color: colors.text}]}>
+          <Text
+            style={[TopAnimeStyles.textTypeAnime, {color: colors.text}]}
+            numberOfLines={2}>
             {item.genres.join(', ')}
           </Text>
         </View>
-        {buttonAddMyList()}
       </View>
     );
   }
@@ -53,20 +69,27 @@ const TopAnimeScreen = () => {
       </View>
     );
   }
+
   return (
-    <BaseScreen isLoading={isLoading}>
+    <BaseScreenNoScroll isLoading={isLoading}>
       <View style={TopAnimeStyles.containerHeader}>
         <Image style={TopAnimeStyles.icBack} source={Drawables.ic_back} />
         <Text style={TopAnimeStyles.textHeader}>Top Hits Anime</Text>
         <Image style={TopAnimeStyles.icSearch} source={Drawables.ic_search} />
       </View>
       <FlatList
-        data={data?.results}
+        style={{marginTop: 20, marginHorizontal: '5%'}}
+        data={listData}
         renderItem={item => renderItemTopAnime(item)}
-        horizontal={true}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item: ResponseTopAnime) => item.id.toString()}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => {
+          if (needLoadMore) {
+            setPage(prevPage => prevPage + 1);
+          }
+        }}
       />
-    </BaseScreen>
+    </BaseScreenNoScroll>
   );
 };
 export default TopAnimeScreen;
