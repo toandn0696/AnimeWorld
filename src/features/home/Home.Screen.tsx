@@ -148,7 +148,13 @@ const HomeScreen = () => {
         <Text style={[HomeStyles.textTopAnime, {color: colors.text}]}>
           Top Hits Anime
         </Text>
-        <Text style={HomeStyles.textSeeAll}>See all</Text>
+        <Pressable
+          style={HomeStyles.containerSeeAllTopAnime}
+          onPress={() => {
+            navigation.navigate('AllTopAnime');
+          }}>
+          <Text style={HomeStyles.textSeeAll}>See all</Text>
+        </Pressable>
       </View>
       <FlatList
         contentContainerStyle={HomeStyles.contentContainerListPostCard}

@@ -4,7 +4,7 @@ export type TopAnime = {
   results: ResponseTopAnime[];
 };
 
-type ResponseTopAnime = {
+export type ResponseTopAnime = {
   id: string;
   title: string;
   image: string;

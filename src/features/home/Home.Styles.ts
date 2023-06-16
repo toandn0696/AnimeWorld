@@ -95,11 +95,13 @@ export const HomeStyles = StyleSheet.create({
     fontWeight: '600',
     marginVertical: 15,
   },
-  textSeeAll: {
+  containerSeeAllTopAnime: {
     position: 'absolute',
     end: 0,
-    color: Colors.colorPrimary,
     alignSelf: 'center',
+  },
+  textSeeAll: {
+    color: Colors.colorPrimary,
     fontSize: 14,
     fontWeight: '400',
   },

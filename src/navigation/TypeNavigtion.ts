@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Main: undefined;
   Watching: undefined;
   DetailAnime: {id: string};
+  AllTopAnime: undefined;
 };
 
 export type RootBottomTabParamList = {
