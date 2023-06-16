@@ -66,8 +66,4 @@ export const appStackRoutes: AppStackRoutesType = [
     name: 'AllTopAnime',
     component: TopAnimeScreen,
   },
-  {
-    name: 'TestUI',
-    component: TestUI,
-  },
 ];
